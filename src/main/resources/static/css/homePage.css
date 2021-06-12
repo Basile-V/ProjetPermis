@@ -1,0 +1,8 @@
+div.jumbotron.text-center{
+    display: flex;
+}
+
+div.jumbotron.text-center div{
+    width: 100%;
+    margin: auto;
+}

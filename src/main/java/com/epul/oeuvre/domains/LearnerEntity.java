@@ -52,7 +52,7 @@ public class LearnerEntity {
         return salt;
     }
 
-    public void setSalt(String surname) {
+    public void setSalt(String salt) {
         this.salt = salt;
     }
 

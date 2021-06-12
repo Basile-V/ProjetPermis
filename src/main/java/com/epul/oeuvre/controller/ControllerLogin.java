@@ -55,6 +55,7 @@ public class ControllerLogin {
             if (unUtilisateur != null) {
                 session = request.getSession();
                 session.setAttribute("id", unUtilisateur.getNumUtil());
+                session.setAttribute("role", unUtilisateur.getRole());
                 destinationPage = "/index";
             } else {
                 message = "mot de passe erroné";

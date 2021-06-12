@@ -3,18 +3,20 @@ package com.epul.oeuvre.controller;
 import com.epul.oeuvre.domains.LearnerEntity;
 import com.epul.oeuvre.mesExceptions.MonException;
 import com.epul.oeuvre.service.LearnerService;
+import com.epul.oeuvre.utilitaires.MonMotPassHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.*;
 import java.util.List;
 
 @RequestMapping("/learner")
 @RestController
 @CrossOrigin
-public class ControlleurLearner {
+public class ControllerLearner {
 
     @Autowired
     private LearnerService unLearnerService;
@@ -60,12 +62,17 @@ public class ControlleurLearner {
         String destinationPage = "";
         try {
             LearnerEntity unLearner = new LearnerEntity();
-            unLearner.setSurname(request.getParameter("txtsurname"));
-            unLearner.setForname(request.getParameter("txtforname"));
-            unLearner.setEmail(request.getParameter("txtemail"));
-            unLearner.setMdp(request.getParameter("txtmdp"));
+            unLearner.setSurname(request.getParameter("txtnom"));
+            unLearner.setForname(request.getParameter("txtprenom"));
+            unLearner.setEmail(request.getParameter("email"));
             unLearner.setRole(request.getParameter("txtrole"));
-            String mdp = request.getParameter("txtmdp");
+            unLearner.setSalt("144be33f");
+            String pwd = request.getParameter("mdp");
+            byte[] salt = MonMotPassHash.transformeEnBytes(unLearner.getSalt());
+            char[] pwd_char = MonMotPassHash.converttoCharArray(pwd);
+            byte[] monpwdCo = MonMotPassHash.generatePasswordHash(pwd_char, salt);
+            unLearner.setMdp(MonMotPassHash.bytesToString(monpwdCo));
+
             unLearnerService.ajouterLearner(unLearner);
             destinationPage = "/index";
         } catch (Exception e) {
@@ -127,10 +134,26 @@ public class ControlleurLearner {
             unLearner.setSurname(request.getParameter("txtsurname"));
             unLearner.setForname(request.getParameter("txtforname"));
             unLearner.setEmail(request.getParameter("txtemail"));
-            unLearner.setMdp(request.getParameter("txtmdp"));
             unLearner.setRole(request.getParameter("txtrole"));
-            unLearnerService.updateLearner(unLearner);
-            destinationPage = "/index";
+            String pwd = request.getParameter("txtoldmdp");
+            byte[] salt = MonMotPassHash.transformeEnBytes(unLearner.getSalt());
+            char[] pwd_char = MonMotPassHash.converttoCharArray(pwd);
+            byte[] monpwdCo = MonMotPassHash.generatePasswordHash(pwd_char, salt);
+            byte[] mdp_byte = MonMotPassHash.transformeEnBytes(unLearner.getMdp());
+            if (!MonMotPassHash.verifyPassword(monpwdCo, mdp_byte)) {
+                String message = "mot de passe erroné";
+                request.setAttribute("message", message);
+                destinationPage = "/index";
+            }
+            else {
+                pwd = request.getParameter("txtnewmdp");
+                salt = MonMotPassHash.transformeEnBytes(unLearner.getSalt());
+                pwd_char = MonMotPassHash.converttoCharArray(pwd);
+                monpwdCo = MonMotPassHash.generatePasswordHash(pwd_char, salt);
+                unLearner.setMdp(MonMotPassHash.bytesToString(monpwdCo));
+                unLearnerService.updateLearner(unLearner);
+                destinationPage = "/index";
+            }
         } catch (Exception e) {
             request.setAttribute("MesErreurs", e.getMessage());
             destinationPage = "vues/Erreur";

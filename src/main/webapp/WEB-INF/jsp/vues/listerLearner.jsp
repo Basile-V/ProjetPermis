@@ -16,11 +16,10 @@
         <h3>Liste des Apprenants</h3>
         <table class="table table-hover">
             <tr>
-                <th class="col-md-1">Id</th>
-                <th class="col-md-1">surname</th>
-                <th class="col-md-1">forname</th>
-                <th class="col-md-1">email</th>
-                <th class="col-md-1">role</th>
+                <th class="col-md-1">Numéro</th>
+                <th class="col-md-1">Nom de l'apprenant</th>
+                <th class="col-md-1">Prénom de l'apprenant</th>
+                <th class="col-md-1">email de l'apprenant</th>
                 <th class="col-md-1"></th>
                 <th class="col-md-1"></th>
             </tr>
@@ -30,7 +29,6 @@
                     <td> ${item.surname} </td>
                     <td> ${item.forname} </td>
                     <td> ${item.email} </td>
-                    <td> ${item.role} </td>
                     <td><a class="btn btn-info" href="modifier/${item.getIdLearner()}" role="button"><span
                             class="glyphicon glyphicon-pencil"></span> Modifier</a>
                     </td>
