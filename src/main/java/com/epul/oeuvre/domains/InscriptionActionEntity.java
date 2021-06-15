@@ -4,13 +4,15 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "inscription__action", schema = "projetpermis", catalog = "")
+@Table(name = "inscription__action", schema = "projetpermis")
 public class InscriptionActionEntity {
     private int id;
     private Integer fk_inscription;
     private Integer fk_action;
     private Integer sort;
     private Integer score;
+    private ActionEntity actionEntity;
+    private InscriptionEntity inscriptionEntity;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -74,5 +76,16 @@ public class InscriptionActionEntity {
     @Override
     public int hashCode() {
         return Objects.hash(id, fk_inscription, fk_action, sort, score);
+    }
+
+
+    @ManyToOne
+    @JoinColumn(name = "fk_inscription", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    public InscriptionEntity getInscriptionEntity() {
+        return inscriptionEntity;
+    }
+
+    public void setInscriptionEntity(InscriptionEntity inscriptionEntity) {
+        this.inscriptionEntity = inscriptionEntity;
     }
 }

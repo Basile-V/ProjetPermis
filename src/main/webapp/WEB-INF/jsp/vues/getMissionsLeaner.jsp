@@ -5,7 +5,7 @@
 <body>
 <%@include file="navigation.jsp" %>
 <div class="jumbotron text-center">
-    <h1>Listing des Missions</h1>
+    <h1>Listing des Missions pour ${learner.forname} ${learner.surname}</h1>
 </div>
 
 <div class="container">
@@ -13,26 +13,22 @@
             class="glyphicon glyphicon-menu-left"></span> Retour accueil</a>
     <h2>Tableau des Missions</h2>
     <div class="container">
-        <h3>Liste des Missions</h3>
+        <h3>Liste des Missions de ${learner.getForname()} ${learner.getSurname()}</h3>
         <table class="table table-hover">
             <tr>
-                <th class="col-md-1">Id</th>
-                <th class="col-md-2">wording</th>
-                <th class="col-md-2">Actions</th>
-
+                <th class="col-md-1">Mission Id</th>
+                <th class="col-md-2">Mission wording</th>
             </tr>
-            <c:forEach items="${mesMissions}" var="item">
+            <c:forEach items="${missions}" var="item">
                 <tr>
                     <td> ${item.getId()} </td>
                     <td> ${item.getWording()} </td>
-                    <td><a class="btn btn-info" href="getUneMission/${item.getId()}" role="button">
-                        <span class="glyphicon glyphicon-pencil"></span>
-                        Action
-                    </a></td>
                 </tr>
             </c:forEach>
         </table>
     </div>
 </div>
+
+
 <%@include file="footer.jsp" %>
 </body>

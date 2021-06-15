@@ -7,6 +7,7 @@ import com.epul.oeuvre.repositories.InscriptionActionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -31,6 +32,23 @@ public class InscriptionActionService implements IInscriptionActionService {
         return uneInscriptionActionRepository.findById(id).orElseThrow(
                 () -> new MonException("Client", "id", id)
         );
+    }
+
+    @Override
+    public List<InscriptionActionEntity> getInscriptionActionsByInscriptionId(int inscriptionId) {
+        List<InscriptionActionEntity> inscriptionActions;
+        ArrayList<InscriptionActionEntity> result = new ArrayList<>();
+        try {
+            inscriptionActions = uneInscriptionActionRepository.findAll();
+        } catch (Exception e) {
+            throw new MonException("Get", "Sql", e.getMessage());
+        }
+        for (InscriptionActionEntity inscriptionAction : inscriptionActions) {
+            if (inscriptionAction.getFkInscription() == inscriptionId) {
+                result.add(inscriptionAction);
+            }
+        }
+        return result;
     }
 
 }

@@ -20,13 +20,16 @@
                 <th class="col-md-1">fk_action</th>
                 <th class="col-md-2">wording</th>
                 <th class="col-md-2">scoreMinimum</th>
+                <th class="col-md-2">Action Wording</th>
             </tr>
-             <c:forEach items="${mesActions}" var="item">
+            <c:forEach items="${mesActions}" var="item">
                 <tr>
                     <td> ${item.getIdAction()} </td>
                     <td> ${item.getFkAction()} </td>
                     <td> ${item.getWording()} </td>
                     <td> ${item.getScoreMinimum()} </td>
+                    <td> ${item.getActionEntity().getWording()} </td>
+
                 </tr>
             </c:forEach>
         </table>

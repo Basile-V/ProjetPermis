@@ -10,4 +10,6 @@ interface IActionService {
     List<ActionEntity> getTousLesActions();
 
     ActionEntity getUneActionID(int id);
+
+    List<ActionEntity> getActionsByActionId(int idAction);
 }

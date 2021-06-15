@@ -1,11 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 
 <%@include file="header.jsp" %>
 <body>
 <%@include file="navigation.jsp" %>
 <div class="jumbotron text-center">
-    <h1>Listing des action missions</h1>
+    <h1>Listing des Actions pour la mission ${mission.getWording()}</h1>
 </div>
 
 <div class="container">
@@ -34,7 +34,7 @@
         </table>
     </div>
 </div>
+
+
 <%@include file="footer.jsp" %>
 </body>
-
-</html>

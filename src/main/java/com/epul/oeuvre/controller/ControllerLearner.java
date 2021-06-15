@@ -1,7 +1,10 @@
 package com.epul.oeuvre.controller;
 
-import com.epul.oeuvre.domains.LearnerEntity;
+import com.epul.oeuvre.domains.*;
 import com.epul.oeuvre.mesExceptions.MonException;
+import com.epul.oeuvre.service.ActionService;
+import com.epul.oeuvre.service.InscriptionActionService;
+import com.epul.oeuvre.service.InscriptionService;
 import com.epul.oeuvre.service.LearnerService;
 import com.epul.oeuvre.utilitaires.MonMotPassHash;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @RequestMapping("/learner")
@@ -19,7 +23,13 @@ import java.util.List;
 public class ControllerLearner {
 
     @Autowired
+    private InscriptionService inscriptionService;
+    @Autowired
+    private ActionService actionService;
+    @Autowired
     private LearnerService unLearnerService;
+    @Autowired
+    private InscriptionActionService inscriptionActionService;
 
     @RequestMapping(method = RequestMethod.GET, value = "/getLearners")
     public ModelAndView getLearners(HttpServletRequest request,
@@ -159,5 +169,66 @@ public class ControllerLearner {
             destinationPage = "vues/Erreur";
         }
         return new ModelAndView(destinationPage);
+    }
+
+
+    @RequestMapping(method = RequestMethod.GET, value = "/listerMissions/{id}")
+    public ModelAndView getMissions(HttpServletRequest request,  @PathVariable("id") int id) {
+        LearnerEntity learner = getLearnerById(id);
+        String destinationPage;
+        List<InscriptionEntity> inscriptions;
+        ArrayList<MissionEntity> missions = new ArrayList<MissionEntity>();
+        try {
+            inscriptions = inscriptionService.getInscriptionByLearnerId(id);
+            for (InscriptionEntity inscriptionEntity : inscriptions) {
+                MissionEntity missionEntity = inscriptionEntity.getMissionEntity();
+                missions.add(missionEntity);
+            }
+            request.setAttribute("missions", missions);
+            destinationPage = "vues/getMissionsLeaner";
+        } catch (Exception e) {
+            request.setAttribute("MesErreurs", e.getMessage());
+            destinationPage = "vues/Erreur";
+        }
+        ModelAndView modelAndView = new ModelAndView(destinationPage);
+        modelAndView.addObject("learner", learner);
+        return modelAndView;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/listerActions/{learnerId}")
+    public ModelAndView getActions(HttpServletRequest request,  @PathVariable("learnerId") int learnerId) {
+        LearnerEntity learner = getLearnerById(learnerId);
+        String destinationPage;
+        List<InscriptionEntity> inscriptions;
+            inscriptions = inscriptionService.getInscriptionByLearnerId(learnerId);
+        ArrayList<InscriptionActionEntity> inscriptionActions = new ArrayList<>();
+        ArrayList<ActionEntity> actions = new ArrayList<>();
+        try {
+            // Actions liées aux inscriptions -> InscriptionAction
+            for (InscriptionEntity inscription : inscriptions) {
+                int inscriptionId = inscription.getId();
+                List<InscriptionActionEntity> uneInscriptionActionList = inscriptionActionService.getInscriptionActionsByInscriptionId(inscriptionId);
+                for (InscriptionActionEntity inscriptionActionEntity : uneInscriptionActionList) {
+                    inscriptionActions.add(inscriptionActionEntity);
+                }
+            }
+
+            // Seulement les Actions
+            for (InscriptionActionEntity inscriptionAction : inscriptionActions) {
+                int actionId = inscriptionAction.getFkAction();
+                List<ActionEntity> actionEntityList = actionService.getActionsByActionId(actionId);
+                for (ActionEntity actionEntity : actionEntityList) {
+                    actions.add(actionEntity);
+                }
+            }
+            request.setAttribute("actions", actions);
+            destinationPage = "vues/getActionsLeaner";
+        } catch (Exception e) {
+            request.setAttribute("MesErreurs", e.getMessage());
+            destinationPage = "vues/Erreur";
+        }
+        ModelAndView modelAndView = new ModelAndView(destinationPage);
+        modelAndView.addObject("learner", learner);
+        return modelAndView;
     }
 }

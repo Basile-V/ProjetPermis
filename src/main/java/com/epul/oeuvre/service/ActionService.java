@@ -6,6 +6,7 @@ import com.epul.oeuvre.repositories.ActionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,6 +24,23 @@ public class ActionService implements IActionService {
             throw new MonException("Get", "Sql", e.getMessage());
         }
         return mesActions;
+    }
+
+    @Override
+    public List<ActionEntity> getActionsByActionId(int idAction) {
+        List<ActionEntity> actions;
+        ArrayList<ActionEntity> result = new ArrayList<>();
+        try {
+            actions = uneActionRepository.findAll();
+        } catch (Exception e) {
+            throw new MonException("Get", "Sql", e.getMessage());
+        }
+        for (ActionEntity action : actions) {
+            if (action.getIdAction() == idAction) {
+                result.add(action);
+            }
+        }
+        return result;
     }
 
 

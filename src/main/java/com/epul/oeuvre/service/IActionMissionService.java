@@ -12,5 +12,4 @@ interface IActionMissionService {
     List<ActionMissionEntity> getTousLesActionMissions();
 
     ActionMissionEntity getUneActionMissionID(int id);
-
 }

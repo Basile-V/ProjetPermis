@@ -20,7 +20,7 @@ public class MissionService implements IMissionService {
         try {
             mesMissions = uneMissionRepository.findAll();
         } catch (Exception e) {
-            throw new MonException("Get", "Sql", e.getMessage());
+            throw new MonException("get", "Sql", e.getMessage());
         }
         return mesMissions;
     }

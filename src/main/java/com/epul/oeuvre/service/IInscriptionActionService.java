@@ -12,4 +12,6 @@ interface IInscriptionActionService {
 
     InscriptionActionEntity getUneInscriptionActionID(int id);
 
+    List<InscriptionActionEntity> getInscriptionActionsByInscriptionId(int inscriptionId);
+
 }

@@ -4,11 +4,13 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "action__mission", schema = "projetpermis", catalog = "")
+@Table(name = "action__mission", schema = "projetpermis")
 public class ActionMissionEntity {
-    private Integer fk_action;
-    private Integer fk_mission;
+    private int fk_action;
+    private int fk_mission;
     private int id;
+    private ActionEntity actionEntity;
+    private MissionEntity missionEntity;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,4 +56,13 @@ public class ActionMissionEntity {
         return Objects.hash(fk_action, fk_mission);
     }
 
+    @ManyToOne
+    @JoinColumn(name = "fk_mission", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    public MissionEntity getMissionEntity() {
+        return missionEntity;
+    }
+
+    public void setMissionEntity(MissionEntity missionEntity) {
+        this.missionEntity = missionEntity;
+    }
 }

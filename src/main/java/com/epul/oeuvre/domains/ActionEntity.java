@@ -4,12 +4,13 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "action", schema = "projetpermis", catalog = "")
+@Table(name = "action", schema = "projetpermis")
 public class ActionEntity {
     private int id;
     private Integer fk_action;
     private String wording;
-    private Integer scoreMinimum;
+    private Integer score_minimum;
+    private ActionEntity actionEntity;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,13 +44,13 @@ public class ActionEntity {
     }
 
     @Basic
-    @Column(name = "scoreMinimum")
+    @Column(name = "score_minimum")
     public Integer getScoreMinimum() {
-        return scoreMinimum;
+        return score_minimum;
     }
 
-    public void setScoreMinimum(Integer scoreMinimum) {
-        this.scoreMinimum = scoreMinimum;
+    public void setScoreMinimum(Integer score_minimum) {
+        this.score_minimum = score_minimum;
     }
 
     @Override
@@ -57,12 +58,21 @@ public class ActionEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ActionEntity that = (ActionEntity) o;
-        return (id == that.id) && Objects.equals(fk_action, that.fk_action) && Objects.equals(wording, that.wording) && Objects.equals(scoreMinimum, that.scoreMinimum);
+        return (id == that.id) && Objects.equals(fk_action, that.fk_action) && Objects.equals(wording, that.wording) && Objects.equals(score_minimum, that.score_minimum);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, fk_action, wording, scoreMinimum);
+        return Objects.hash(id, fk_action, wording, score_minimum);
     }
 
+    @ManyToOne
+    @JoinColumn(name = "fk_action", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    public ActionEntity getActionEntity() {
+        return actionEntity;
+    }
+
+    public void setActionEntity(ActionEntity actionEntity) {
+        this.actionEntity = actionEntity;
+    }
 }

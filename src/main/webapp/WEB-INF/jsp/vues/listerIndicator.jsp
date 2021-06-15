@@ -23,6 +23,7 @@
                 <th class="col-md-2">value_if_un_check</th>
 
             </tr>
+            <jsp:useBean id="mesIndicators" scope="request" type="java.util.List"/>
             <c:forEach items="${mesIndicators}" var="item">
                 <tr>
                     <td> ${item.getId()} </td>

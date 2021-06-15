@@ -5,12 +5,14 @@ import java.util.Date;
 import java.util.Objects;
 
 @Entity
-@Table(name = "inscription", schema = "projetpermis", catalog = "")
+@Table(name = "inscription", schema = "projetpermis")
 public class InscriptionEntity {
     private int id;
     private Integer fk_learner;
     private Integer fk_mission;
     private Date date;
+    private LearnerEntity learnerEntity;
+    private MissionEntity missionEntity;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -67,4 +69,23 @@ public class InscriptionEntity {
         return Objects.hash(id, fk_learner, fk_mission, date);
     }
 
+    @ManyToOne
+    @JoinColumn(name = "fk_learner", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    public LearnerEntity getLearnerEntity() {
+        return learnerEntity;
+    }
+
+    public void setLearnerEntity(LearnerEntity learnerEntity) {
+        this.learnerEntity = learnerEntity;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "fk_mission", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    public MissionEntity getMissionEntity() {
+        return missionEntity;
+    }
+
+    public void setMissionEntity(MissionEntity missionEntity) {
+        this.missionEntity = missionEntity;
+    }
 }

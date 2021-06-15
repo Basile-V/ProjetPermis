@@ -31,6 +31,17 @@
                 </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <span class="glyphicon glyphicon-user"></span>
+                        Inscription
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/inscription/getInscriptions"> <span class="glyphicon glyphicon-th-list"></span> Lister les
+                            Inscription </a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <span class="glyphicon glyphicon-tasks"></span>
                         Actions
                         <span class="caret"></span>
@@ -42,12 +53,36 @@
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <span class="glyphicon glyphicon-user"></span>
+                        Inscription Action
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="/inscription_action/getInscriptionActions"> <span class="glyphicon glyphicon-th-list"></span> Lister les Inscription Actions</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <span class="glyphicon glyphicon-user"></span>
                         Indicators
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="/indicator/getIndicators"> <span class="glyphicon glyphicon-th-list"></span> Lister les
-                            indicators </a></li>
+                        <li>
+                            <a href="/indicator/getIndicators"> <span class="glyphicon glyphicon-th-list"></span> Lister les indicators </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <span class="glyphicon glyphicon-user"></span>
+                        Actions Missions
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/action_mission/getActionMissions"> <span class="glyphicon glyphicon-th-list"></span> Lister les
+                            action missions </a></li>
                     </ul>
                 </li>
 

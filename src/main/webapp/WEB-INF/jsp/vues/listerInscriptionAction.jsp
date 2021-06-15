@@ -21,8 +21,10 @@
                 <th class="col-md-2">fk_action</th>
                 <th class="col-md-2">sort</th>
                 <th class="col-md-2">score</th>
+                <th class="col-md-2">Inscription Date</th>
 
             </tr>
+            <jsp:useBean id="mesInscriptionActions" scope="request" type="java.util.List"/>
             <c:forEach items="${mesInscriptionActions}" var="item">
                 <tr>
                     <td> ${item.getId()}  </td>
@@ -30,6 +32,7 @@
                     <td> ${item.getFkAction()} </td>
                     <td> ${item.getSort()}  </td>
                     <td> ${item.getScore()}  </td>
+                    <td> ${item.getInscriptionEntity().getDate()} </td>
                 </tr>
             </c:forEach>
         </table>
